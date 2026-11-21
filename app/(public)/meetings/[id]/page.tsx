@@ -3,11 +3,12 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import MeetingDetail from "@/components/MeetingDetail";
 import PrintButton from "@/components/PrintButton";
-import { fetchMeeting } from "@/lib/api";
+import { getMeetingById, parseMeetingId } from "@/lib/meetings-db";
 
 async function MeetingContent({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const meeting = await fetchMeeting(id);
+  const meetingId = parseMeetingId(id);
+  const meeting = meetingId === null ? null : await getMeetingById(meetingId);
 
   if (!meeting) {
     notFound();

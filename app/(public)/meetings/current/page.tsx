@@ -11,7 +11,7 @@ export default async function CurrentMeetingPage() {
   // "Today" is different on every request.
   await connection();
   const sunday = getMostRecentSunday(new Date());
-  const meeting = getMeetingByDate(sunday);
+  const meeting = await getMeetingByDate(sunday);
 
   // Fall back to the full list when no meeting is planned for this Sunday.
   return redirect(meeting ? `/meetings/${meeting.id}` : "/meetings");
